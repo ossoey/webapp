@@ -1,0 +1,22 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Tests webapp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ossoey/webapp.git"
+  },
+  "author": "JJ Ebanga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ossoey/webapp/issues"
+  },
+  "homepage": "https://github.com/ossoey/webapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
