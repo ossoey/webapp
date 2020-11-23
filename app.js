@@ -1,18 +1,24 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000;
-//app.use(express.static('public'))
-//app.use(express.static('public/cite'))
 
 
+let rootObj = { root : __dirname};
 
 app.get('/', (req, res) => {
-  res.send('Hello Ebanga World!')
+ // res.send('Hello Ebanga World!');
+  res.sendFile('public/index.html' , rootObj );
 });
+
+app.get('/dynipage', (req, res) => {
+  // res.send('Hello Ebanga World!');
+  res.sendFile('public/dynipage.html' , rootObj );
+});
+
 
 app.get('/coco1', (req, res) => {
   //res.sendFile("/exemple.txt");
-  res.sendFile('public/exemple.txt' , { root : __dirname});
+  res.sendFile('public/exemple.txt' , rootObj );
 });
 
 app.get('/ab?cd', function (req, res) {
