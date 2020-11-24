@@ -35,7 +35,7 @@
     <!-- Photo grid -->
     <div class="w3-row w3-grayscale-min">
         <div class="w3-quarter">
-            <img src="/w3images/girl.jpg"  id ="dynipage" style="width:100%"  alt="point">
+            <img src="/w3images/girl.jpg"  id ="dynipage" style="width:100%"  alt="dynipage">
             <img src="/w3images/boy.jpg" style="width:100%" onclick="onClick(this)" alt="Quiet day at the beach. Cold, but beautiful">
             <img src="/w3images/girl.jpg" style="width:100%" onclick="onClick(this)" alt="The Beach. Me. Alone. Beautiful">
         </div>
@@ -250,7 +250,7 @@
     let openHtml = function (paramsIn) {
         let elt = document.getElementById(paramsIn.moduleName);
         elt.addEventListener("click",function () {
-            window.location.href = window.location.href + paramsIn.moduleName;
+            window.location.href = window.location.href +'profile/'+ paramsIn.moduleName;
         });
     };
 

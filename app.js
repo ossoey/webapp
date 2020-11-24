@@ -13,12 +13,6 @@ app.get('/dynipage', (req, res) => {
   res.sendFile('public/dynipage.html' , rootObj );
 });
 
-// app.get('/profile/:name', (req, res) => {
-//   // res.send('Hello Ebanga World!');
-//
-//   res.sendFile('public/dynipage.html' , rootObj );
-// });
-
 app.get('/profile/:name', (req, res) => {
   res.render('profile',{person:req.params.name});
 });
