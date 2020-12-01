@@ -15,12 +15,12 @@
                 }   ,
                 {
                     id    : "polesportions",
-                    description : "VECMENTATION - SEGMENTATION VECTORIELLES ",
+                    description : "VECMENTATIONS - SEGMENTATION VECTORIELLES ",
                     image: '/image'
                 }    ,
                 {
                     id    : "segmentation",
-                    description : "SEGMENTATION GÉOMÉTRIQUES",
+                    description : "SEGMENTATIONS GÉOMÉTRIQUES",
                     image: '/image'
                 }
             ]    ,
