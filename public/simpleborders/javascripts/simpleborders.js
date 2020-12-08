@@ -40,6 +40,9 @@ let simplestBorders = new  Ebika.Projects.WebGL1Borders ({canvasId:'canvasid', s
 function main() {
    simplestBorders.shdProg.canvasFullScreen();
    simplestBorders.draw();
+
+
+
    // let border = new  Ebika.Borders();
    // border.doTests()
 

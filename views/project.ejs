@@ -36,25 +36,27 @@ and is wrapped around the whole page content, except for the footer in this exam
     <!-- Header -->
     <header class="w3-container w3-center w3-padding-48 w3-white">
         <h1 class="w3-xxxlarge"><b>  <%= description %></b></h1>
-        <h6>Powered by  <span class="w3-tag" >  <%= mainlib %>  </span></h6>
+        <h6>Powered by  <span class="w3-tag" >  <%= mainlib %>    </span>   <span class="w3-tag gotolink " id ="home" >  << </span>    </h6>
     </header>
 
+    <canvas  class="" id="canvasid" width="1600" height="1060" style="border:1px solid #000000" ></canvas>
     <!-- Image header -->
     <header class="w3-display-container w3-wide" id="home">
 
-        <canvas  class="" id="canvasid" width="1600" height="1060" style="border:1px solid #000000;" ></canvas>
+
 
     </header>
     <!-- button header -->
     <header class="w3-display-container w3-wide" id="home1">
-        <h4>
+
+
+        <h6>
             <button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" id ="home" >HOME</button>
-            <button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" onclick="document.getElementById('subscribe').style.display='block'">SUBSCRIBE</button>
-        </h4>
-        <h4>
-            <button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" onclick="document.getElementById('subscribe').style.display='block'">AGRANDIR</button>
-            <button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" onclick="document.getElementById('subscribe').style.display='block'">ENREGISTRER</button>
-        </h4>
+            <button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" id ="agrandir" >AGRANDIR</button>
+            <button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" id="saveimage">ENREGISTRER</button>
+        </h6>
+
+
     </header>
 </div>
 
@@ -80,6 +82,33 @@ and is wrapped around the whole page content, except for the footer in this exam
 <script src="/ebikaprj"> </script>
 <script src="<%= jssource %>" > </script>
 <script>
+   let ebkObj  = new Ebika() ;
+   let canvas  = document.getElementById("canvasid");
+
+
+   document.addEventListener("dblclick",  function(e) {
+
+       e = e || window.event;
+       let target = e.target || e.srcElement;
+       switch(target.id) {
+           case "canvasid":
+               const filename    =  "canvas-image.png"
+               if (window.navigator.msSaveBlob) {
+                   window.navigator.msSaveBlob(canvas.msToBlob(), filename )
+               } else {
+
+                   const a = document.createElement("a");
+                   a.href   =   canvas.toDataURL( filename ,0,0);
+                   document.body.appendChild(a);
+                   a.download =  filename;
+                   a.click();
+                   document.body.removeChild(a);
+
+               }
+           break;
+       }
+   });
+
 
     document.addEventListener('click', function(e) {
         e = e || window.event;
@@ -88,6 +117,30 @@ and is wrapped around the whole page content, except for the footer in this exam
             case "home":
                 window.location.href = "/"
                 break;
+            case "agrandir":
+                ebkObj.fullreenCanvasFromButton(canvas);
+                break;
+            case "saveimage":
+
+               // const dataURL =  canvas.toDataURL("image/jpeg",0,0);
+                const filename    =  "canvas-image.png"
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(canvas.msToBlob(), filename )
+                } else {
+
+                    const a = document.createElement("a");
+                    a.href   =   canvas.toDataURL();
+                    document.body.appendChild(a);
+                    a.download =  filename;
+                    a.click();
+                    document.body.removeChild(a);
+
+
+
+                }
+
+
+                break;
 
             default:
             // code block
@@ -95,9 +148,7 @@ and is wrapped around the whole page content, except for the footer in this exam
 
     }, false);
 
-   let  canvas1 = document.getElementById('canvasid');
-   let     canvas2 = document.getElementById('canvasid');
-   console.log(canvas1)
+
 </script>
 </body>
 </html>

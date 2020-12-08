@@ -9,7 +9,9 @@ let projectsInfo  =  infos.getInfos();
 
 app.get('/', (req, res) => {
     res.render('index',
-        {  mainLib: projectsInfo.lib.ebika.name, allprojects: projectsInfo.allProjects});
+        {  mainLib: projectsInfo.lib.ebika.name,
+            labName : projectsInfo.lib.ebika.labName,
+            allprojects: projectsInfo.allProjects});
 });
 
 app.get('/ebika', (req, res) => {
@@ -20,8 +22,8 @@ app.get('/ebikaprj', (req, res) => {
   res.sendFile('./public/lib/javascripts/ebika_prj.js' , rootObj );
 });
 
-app.get('/image', (req, res) => {
-    res.sendFile('./public/lib/images/jje.png' , rootObj );
+app.get('/image/:name', (req, res) => {
+    res.sendFile('./public/'+   req.params.name   +'/images/'  +   req.params.name +".png", rootObj );
 });
 
 app.get('/project/:name', (req, res) => {

@@ -122,6 +122,17 @@ class Ebika {
        return merged;
    }
 
+    fullreenCanvasFromButton (canvas) {
+
+            let el =    canvas;
+            if(el.webkitRequestFullScreen) {
+                el.webkitRequestFullScreen();
+            }
+            else {
+                el.mozRequestFullScreen();
+            }
+    } ;
+
     tests(paramsIn) {
 
         // console.log( paramsIn.object);
@@ -234,27 +245,28 @@ Ebika.Graphic3DContext                    = class EbikaGraphic3DContext  extends
             console.log(` Le canvas avec l'identifiant ${this.canvasId} n'existe pas `);
             return;
         };
-        this.gl = this.canvas.getContext(this.contextType);
+        this.gl = this.canvas.getContext(this.contextType, {preserveDrawingBuffer: true});
         if (!this.gl) {
             console.log(`Le context n'a pas été initialié`);
             return;
         };
     } ;
 
-    onClickCanvasFullreen (canvas) {
-
-        this.canvas.addEventListener("click",function () {
-
-            let el =    canvas;
-            if(el.webkitRequestFullScreen) {
-                el.webkitRequestFullScreen();
-            }
-            else {
-                el.mozRequestFullScreen();
-            }
-
-        });
-    }
+    // onClickCanvasFullreen (canvas) {
+    //
+    //     this.canvas.addEventListener("click",function () {
+    //
+    //         let el =    canvas;
+    //         if(el.webkitRequestFullScreen) {
+    //             el.webkitRequestFullScreen();
+    //         }
+    //         else {
+    //             el.mozRequestFullScreen();
+    //         }
+    //
+    //     });
+    // } ;
+    //
 };
 
 Ebika.ShaderProgram                       = class EbikaShaderProgram extends Ebika {

@@ -3,25 +3,38 @@
 
         return {
             lib:  {
-                ebika : { name: "EBIKA" }
+                ebika : { name: "EBIKA",
+                          labName: "LABORATOIRE EBIKA"
+                }
             },
             allProjects : [
                 {
-                    id    : "borders",
+                    id    : "simpleborders",
                     description : 'GÉNÉRATEUR DES BORDURES DE POLYGONES',
-                    image: '/image'
-
+                    image: '/image/simpleborders'
 
                 }   ,
                 {
-                    id    : "polesportions",
+                    id    : "simplestpolesportions",
                     description : "VECMENTATIONS - SEGMENTATION VECTORIELLES ",
-                    image: '/image'
+                    image: '/image/simplestpolesportions'
                 }    ,
                 {
-                    id    : "segmentation",
+                    id    : "simplestsegmentations",
                     description : "SEGMENTATIONS GÉOMÉTRIQUES",
-                    image: '/image'
+                    image: '/image/simplestsegmentations'
+                }    ,
+
+                {
+                    id    : "simplestmultipoints",
+                    description : "WEBGL, MULTIPOINTS SIMPLES",
+                    image: '/image/simplestmultipoints'
+                }    ,
+
+                {
+                    id    : "simplestpoint",
+                    description : "WEBGL, POINT SIMPLE",
+                    image: '/image/simplestpoint'
                 }
             ]    ,
 
