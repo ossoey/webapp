@@ -14,7 +14,7 @@
                  gl_FragColor = u_FragColor;
                }`
      },
-     clearColor: [0.,0.,0.,0.3],
+     clearColor: [0.,0.,0.,1.0],
      attributs : {
              position : {name:'a_Position', value:[-0.9,0.8,0.0]},
              pointSize : {name:'a_PointSize', value:5.0}

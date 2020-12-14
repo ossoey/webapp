@@ -339,7 +339,7 @@ Ebika.Projects.WebGL1Borders   = class EbikaProjectsWebGL1Borders   extends Ebik
 
         function drawAllRecords (obj) {
             obj.shdProg.gl.clearColor( obj.clearColor[0],obj.clearColor[1],obj.clearColor[2],obj.clearColor[3]);
-            obj.shdProg.gl.clearColor( 0.,0.,0.,1.);
+            //obj.shdProg.gl.clearColor( 0.,0.,0.,1.);
             obj.shdProg.gl.clear( obj.shdProg.gl.COLOR_BUFFER_BIT);
             for (let recordIndex= 0;recordIndex<obj.shdProg.attributs['position'].recordCount;recordIndex++) {
                 locateAndPassElement (obj, {recordIndex:recordIndex});

@@ -8,6 +8,15 @@
                 }
             },
             allProjects : [
+
+
+
+                {
+                    id    : "simplestborders_glinstances",
+                    description : 'INSTANCES DE GÉNÉRATEUR DES BORDURES DE POLYGONES',
+                    image: '/image/simplestborders_glinstances'
+
+                }   ,
                 {
                     id    : "simpleborders",
                     description : 'GÉNÉRATEUR DES BORDURES DE POLYGONES',

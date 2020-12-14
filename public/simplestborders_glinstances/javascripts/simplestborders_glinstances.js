@@ -1,4 +1,4 @@
-let simplestBorders = new  Ebika.Projects.WebGL1Borders ({canvasId:'canvasid', shadersSources: {
+let simplestBorders_glinstances = new  Ebika.Projects.WebGL1Borders_glinstances  ({canvasId:'canvasid', shadersSources: {
         'VERTEX_SHADER':
             `attribute vec4 a_Position;
               attribute float a_PointSize;
@@ -38,14 +38,7 @@ let simplestBorders = new  Ebika.Projects.WebGL1Borders ({canvasId:'canvasid', s
 });
 
 function main() {
-   simplestBorders.shdProg.canvasFullScreen();
-   simplestBorders.draw();
+    simplestBorders_glinstances.shdProg.canvasFullScreen();
+    simplestBorders_glinstances.draw();
 
-
-
-   // let border = new  Ebika.Borders();
-   // border.doTests()
-
-  // let curveInfo = new  Ebika.CurveInfo();
-   // curveInfo.doTests();
 }

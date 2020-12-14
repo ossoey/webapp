@@ -2414,8 +2414,6 @@ Ebika.Borders                   = class EbikaBorders   extends  Ebika.PolePortio
             let insidePole;
             this.structureIni(paramsIn);
 
-
-
             for(let poleIndex = 0 ;poleIndex < poleIndexMax;poleIndex++ ) {
 
                 let mergedPoles  =   this.getSuccessivePoles({ownerObj:paramsIn.ownerObj,
