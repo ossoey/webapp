@@ -252,21 +252,6 @@ Ebika.Graphic3DContext                    = class EbikaGraphic3DContext  extends
         };
     } ;
 
-    // onClickCanvasFullreen (canvas) {
-    //
-    //     this.canvas.addEventListener("click",function () {
-    //
-    //         let el =    canvas;
-    //         if(el.webkitRequestFullScreen) {
-    //             el.webkitRequestFullScreen();
-    //         }
-    //         else {
-    //             el.mozRequestFullScreen();
-    //         }
-    //
-    //     });
-    // } ;
-    //
 };
 
 Ebika.ShaderProgram                       = class EbikaShaderProgram extends Ebika {
@@ -448,6 +433,86 @@ Ebika.ShaderProgram                       = class EbikaShaderProgram extends Ebi
         let values    = this.uniforms[paramsIn.uniformName].values;
         let stepIndex = this.uniforms[paramsIn.uniformName].recordSize*paramsIn.recordIndex;
         this.gl.uniform4f(this.uniforms[paramsIn.uniformName].obj, values[stepIndex],values[stepIndex+1],values[stepIndex+2],values[stepIndex+3]);
+    };
+};
+
+Ebika.ShaderProgramNBuffer                       = class EbikaShaderProgram extends Ebika {
+    constructor(paramsIn) {
+        super();
+        this.VERTEX_SHADER            = 'VERTEX_SHADER';
+        this.FRAGMENT_SHADER          = 'FRAGMENT_SHADER';
+        this.POINTS                   = 'POINTS';
+        this.LINES                    = 'LINES';
+        this.LINE_STRIP               = 'LINE_STRIP';
+        this.LINE_LOOP                = 'LINE_LOOP';
+        this.TRIANGLES                = 'TRIANGLES';
+        this.TRIANGLE_STRIP           = 'TRIANGLE_STRIP';
+        this.TRIANGLE_FAN             = 'TRIANGLE_FAN';
+        this.attributs                = {};
+        this.uniforms                 = {};
+        const contextType = 'webgl';
+        this.graphic3DContext = new Ebika.Graphic3DContext({canvasId:paramsIn.canvasId, contextType:contextType }) ;
+        this.graphic3DContext.ini();
+        this.shadersSources   = paramsIn.shadersSources;
+        this.gl       =   this.graphic3DContext.gl;
+        this.canvas   =   this.graphic3DContext.canvas;
+
+        this.vertexShader;
+        this.fragmentShader;
+        this.program          = this.gl.createProgram();
+
+        function   getShader(objOlder, shadersSources,shaderSourceKey){
+            let shader;
+            if (shaderSourceKey == objOlder.VERTEX_SHADER) {
+                shader = objOlder.gl.createShader(objOlder.gl.VERTEX_SHADER);
+
+            }
+            else if (shaderSourceKey ==  objOlder.FRAGMENT_SHADER)   {
+
+                shader = objOlder.gl.createShader(objOlder.gl.FRAGMENT_SHADER);
+
+            };
+
+            objOlder.gl.shaderSource(shader,shadersSources[shaderSourceKey]);
+            objOlder.gl.compileShader(shader);
+            if (!objOlder.gl.getShaderParameter(shader,objOlder.gl.COMPILE_STATUS)) {
+                console.error(objOlder.gl.getShaderInfoLog(shader));
+                return null;
+            };
+            return shader;
+        }
+
+        this.ini = function () {
+
+            this.vertexShader     =  getShader(this, this.shadersSources, this.VERTEX_SHADER);
+            this.fragmentShader   =  getShader(this, this.shadersSources, this.FRAGMENT_SHADER);
+
+            this.gl.attachShader(this.program,this.vertexShader);
+            this.gl.attachShader(this.program,this.fragmentShader);
+            this.gl.linkProgram(this.program);
+
+            if (! this.gl.getProgramParameter( this.program,  this.gl.LINK_STATUS)) {
+                console.error('Shaders not linked');
+                return null;
+            };
+            this.gl.useProgram( this.program);
+        }
+    };
+
+    canvasFullScreen () {
+        let canvas =  this.canvas;
+
+        canvas.addEventListener("click",function () {
+
+            let el =  canvas;
+            if(el.webkitRequestFullScreen) {
+                el.webkitRequestFullScreen();
+            }
+            else {
+                el.mozRequestFullScreen();
+            }
+
+        });
     };
 }
 

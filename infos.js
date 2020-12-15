@@ -9,8 +9,12 @@
             },
             allProjects : [
 
+                {
+                    id    : "multipoints",
+                    description : 'WEBGL BUFFER, ENSEMBLE DE POINTS',
+                    image: '/image/multipoints'
 
-
+                }   ,
                 {
                     id    : "simplestborders_glinstances",
                     description : 'INSTANCES DE GÉNÉRATEUR DES BORDURES DE POLYGONES',

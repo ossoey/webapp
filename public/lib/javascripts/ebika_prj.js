@@ -105,6 +105,120 @@ Ebika.Projects.WebGL1Tests   = class EbikaProjectsWebGL1Tests   extends Ebika   
 };
 
 
+Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    extends Ebika   {
+    constructor(paramsIn) {
+        super();
+        this.shdProg     = new Ebika.ShaderProgram({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources});
+
+        this.shdProgIns  = [new Ebika.ShaderProgram({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources}),
+            new Ebika.ShaderProgram({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources})]
+
+        this.shdProg.attributs
+
+        let poles  = [
+            -0.91 ,      -0.91,   0,
+            -0.63 , -0.8,   0,
+            -0.5 ,      -0.5,   0,
+            0.2,     -0.3,  0 ,
+            0.91,       -0.91,  0 ,
+            0.91,       -0.6,  0 ,
+            0.3,     0.1,  0 ,
+            0.91 ,      0.91,   0,
+            -0.91 ,      0.91,   0,
+            -0.6 ,    0.3,   0,
+        ];
+        let bordersobj = new  Ebika.Borders();
+        let borders    = bordersobj.getBorders({
+            poles:  poles,
+            scalingFactorRanges : [[0.3, 0.07] ] ,
+            scalingFactorConvRanges  :  [[0,1] ]
+        });
+
+        poles = bordersobj.polesMerge({polesA: poles, polesB: borders});
+
+
+        this.polePortionsPosition = new Ebika.PolePortions ({
+
+            poles  : poles,
+
+            dimension:3 ,
+
+        });
+
+        this.polePortionsColor= new Ebika.PolePortions ({
+            poles:[0.9,0.8,0.3,1.0,
+                0.3,0.5,0.7,1.0],
+            dimension:4,
+        });
+        this.polePortionsPointSize  = new Ebika.PolePortions ({
+            poles:[3.8,3.81],
+            dimension:1,
+        });
+
+
+
+        let segs =  new   Ebika.Segmentations();
+        let ratios  =  segs.segmentate().normalized
+
+        this.clearColor = paramsIn.clearColor;
+
+
+
+
+    };
+
+    draw() {
+
+
+        function initVertexBuffers(gl,program) {
+            let  vertices = new Float32Array([  0.0, 0.5, -0.5, -0.5, 0.5, -0.5 ]);
+            let n = 3;
+            let vertexBuffer = gl.createBuffer();
+            if (!vertexBuffer) {  console.log('Failed to create the buffer object '); return -1; };
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            let a_Position = gl.getAttribLocation(program, 'a_Position');
+            gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(a_Position);
+            return n;
+        };
+
+        function initSizesBuffers(gl,program) {
+
+            let  sizes = new Float32Array([  25.0, 20.0, 15.0 ]);
+            let  sizesCount = 3;
+            let  sizesBuffer = gl.createBuffer();
+            if (!sizesBuffer) {  console.log('Failed to create the buffer object '); return -1; };
+            gl.bindBuffer(gl.ARRAY_BUFFER, sizesBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
+            let a_PointSize = gl.getAttribLocation(program, 'a_PointSize');
+            gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(a_PointSize);
+            return sizesCount;
+        };
+
+        function drawAllRecords (obj) {
+            obj.shdProg.gl.clearColor( obj.clearColor[0],obj.clearColor[1],obj.clearColor[2],obj.clearColor[3]);
+            obj.shdProg.gl.clear( obj.shdProg.gl.COLOR_BUFFER_BIT);
+
+            let n = initVertexBuffers(obj.shdProg.gl,obj.shdProg.program);
+            if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
+
+            let sizesCount = initSizesBuffers(obj.shdProg.gl,obj.shdProg.program);
+            if (sizesCount < 0) {  console.log('Failed to set the size of the vertices'); return;  }
+
+            obj.shdProg.gl.drawArrays(obj.shdProg.gl.POINTS, 0, n);
+            // };
+        }
+
+
+        this.shdProg.ini();
+        drawAllRecords (this);
+    };
+};
+
+
+
 Ebika.Projects.WebGL1Borders_glinstances   = class EbikaProjectsWebGL1Borders_glinstances   extends Ebika   {
     constructor(paramsIn) {
         super();
@@ -441,7 +555,6 @@ Ebika.Projects.WebGL1SimpleSegsPolePortions   = class EbikaProjectsWebGL1SimpleS
     };
 };
 
-
 Ebika.Projects.WebGL1SimplePolePortions   = class EbikaProjectsWebGL1SimplePolePortions  extends Ebika   {
     constructor(paramsIn) {
         super();
@@ -521,7 +634,6 @@ Ebika.Projects.WebGL1SimplePolePortions   = class EbikaProjectsWebGL1SimplePoleP
         drawAllRecords (this);
     };
 };
-
 
 Ebika.Projects.WebGL1SimplestMultiPoints    = class EbikaProjectsWebGL1SimplestMultiPoints    extends Ebika   {
     constructor(paramsIn) {
