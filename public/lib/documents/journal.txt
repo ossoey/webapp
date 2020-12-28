@@ -6,8 +6,9 @@ JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
 2020-12-28, 9:00 AM, Poursuivre le plan du 2020-12-20:
 
 I     Réalisations.
-I-1   Labo Ebika, Redesigner ShaderProgramNBuffer en définissant les constantes GL à la façon de WebGl. Modification du module Multipoints qui l'appel  ,2020-12-28, 9:00 - 11:00, AM.
+I-3   Labo Ebika, Expérimenter le passage de données en un seul block de Buffer en utilisatant les paramètres stride et offset  ,2020-12-28, 12:00 - 12:30, PM.
 I-2   Labo Ebika, Expérimenter le passage de trois types de Variables dans le Shade(vertex, size et colors)  ,2020-12-28, 11:00 - 12:00, AM.
+I-1   Labo Ebika, Redesigner ShaderProgramNBuffer en définissant les constantes GL à la façon de WebGl. Modification du module Multipoints qui l'appel  ,2020-12-28, 9:00 - 11:00, AM.
 
 -----
 

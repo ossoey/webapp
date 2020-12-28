@@ -59,27 +59,66 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             return colorsCount;
         };
 
-        function drawAllRecords (obj) {
+
+        function initBufferBlock(gl,program) {
+
+            let  dataBlock = new Float32Array(
+                [   0.0, 0.5,  1.0, 0.0, 0.0,   25.0,
+                             -0.5, -0.5, 0.0, 1.0, 0.0 ,    20.0,
+                              0.5, -0.5 , 0.0, 0.0, 1.0 ,   15.0
+                ]);
+            let  count = 3;
+            let  SIZE_PER_ELT  = dataBlock.BYTES_PER_ELEMENT
+            let  bufferBlock    = gl.createBuffer();
+            if (!bufferBlock) {  console.log('Failed to create the buffer object '); return -1; };
+            gl.bindBuffer(gl.ARRAY_BUFFER, bufferBlock);
+            gl.bufferData(gl.ARRAY_BUFFER, dataBlock, gl.STATIC_DRAW);
+
+            let a_Position = gl.getAttribLocation(program, 'a_Position');
+            gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, SIZE_PER_ELT*6, 0);
+            gl.enableVertexAttribArray(a_Position);
+
+
+            let a_Color = gl.getAttribLocation(program, 'a_Color');
+            gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, SIZE_PER_ELT*6, SIZE_PER_ELT*2);
+            gl.enableVertexAttribArray(a_Color);
+
+
+            let a_PointSize = gl.getAttribLocation(program, 'a_PointSize');
+            gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, SIZE_PER_ELT*6, SIZE_PER_ELT*5);
+            gl.enableVertexAttribArray(a_PointSize);
+
+            return  count
+        };
+
+
+        function drawAllRecords (obj,paramsIn) {
             obj.shdProg.gl.clearColor( obj.clearColor[0],obj.clearColor[1],obj.clearColor[2],obj.clearColor[3]);
             obj.shdProg.gl.clear( obj.shdProg.gl.COLOR_BUFFER_BIT);
 
-            let n = initVertexBuffers(obj.shdProg.gl,obj.shdProg.program);
-            if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
+            if   (paramsIn.bufferStyle == "MULTIPLE" ) {
+                let n = initVertexBuffers(obj.shdProg.gl,obj.shdProg.program);
+                if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
 
-            let sizesCount = initSizesBuffers(obj.shdProg.gl,obj.shdProg.program);
-            if (sizesCount < 0) {  console.log('Failed to set the size of the vertices'); return;  }
+                let sizesCount = initSizesBuffers(obj.shdProg.gl,obj.shdProg.program);
+                if (sizesCount < 0) {  console.log('Failed to set the size of the vertices'); return;  }
 
 
-            let colorsCount = initColorsBuffers(obj.shdProg.gl,obj.shdProg.program);
-            if (colorsCount < 0) {  console.log('Failed to set the colors of the vertices'); return;  }
+                let colorsCount = initColorsBuffers(obj.shdProg.gl,obj.shdProg.program);
+                if (colorsCount < 0) {  console.log('Failed to set the colors of the vertices'); return;  }
 
-            obj.shdProg.gl.drawArrays(obj.LINE_LOOP, 0, n);
-            // };
+                obj.shdProg.gl.drawArrays(obj.POINTS, 0, n);
+            }
+            else if (paramsIn.bufferStyle == "ONE" ) {
+                let n = initBufferBlock(obj.shdProg.gl,obj.shdProg.program)
+                if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
+                obj.shdProg.gl.drawArrays(obj.POINTS, 0, n);
+            }
+
         }
 
-
         this.shdProg.ini();
-        drawAllRecords (this);
+        drawAllRecords (this,{bufferStyle: "ONE" } );
     };
 };
 
