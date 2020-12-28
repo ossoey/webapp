@@ -5,7 +5,7 @@ const FSH =  new Ebika().FRAGMENT_SHADER.toString();
 
 
 
-Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    extends Ebika   {
+Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints_colors    extends Ebika   {
     constructor(paramsIn) {
         super();
         this.shdProg     = new Ebika.ShaderProgramNBuffer ({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources});
@@ -42,6 +42,23 @@ Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    ext
             return sizesCount;
         };
 
+        function initColorsBuffers(gl,program) {
+
+            let  colors = new Float32Array([ 1.0, 0.0, 0.0,
+                                                       0.0, 1.0, 0.0 ,
+                                                       0.0, 0.0, 1.0 ,
+            ]);
+            let  colorsCount = 3;
+            let  colorsBuffer = gl.createBuffer();
+            if (!colorsBuffer) {  console.log('Failed to create the buffer object '); return -1; };
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorsBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
+            let a_Color = gl.getAttribLocation(program, 'a_Color');
+            gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(a_Color);
+            return colorsCount;
+        };
+
         function drawAllRecords (obj) {
             obj.shdProg.gl.clearColor( obj.clearColor[0],obj.clearColor[1],obj.clearColor[2],obj.clearColor[3]);
             obj.shdProg.gl.clear( obj.shdProg.gl.COLOR_BUFFER_BIT);
@@ -52,7 +69,11 @@ Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    ext
             let sizesCount = initSizesBuffers(obj.shdProg.gl,obj.shdProg.program);
             if (sizesCount < 0) {  console.log('Failed to set the size of the vertices'); return;  }
 
-            obj.shdProg.gl.drawArrays(obj.shdProg.gl.POINTS, 0, n);
+
+            let colorsCount = initColorsBuffers(obj.shdProg.gl,obj.shdProg.program);
+            if (colorsCount < 0) {  console.log('Failed to set the colors of the vertices'); return;  }
+
+            obj.shdProg.gl.drawArrays(obj.LINE_LOOP, 0, n);
             // };
         }
 
@@ -66,20 +87,26 @@ Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    ext
 
 let shadersSources = {};
  shadersSources[VSH] = `attribute vec4 a_Position;
-                      attribute float a_PointSize;
+                       attribute float a_PointSize;
+                       attribute vec4 a_Color;
+                       varying  vec4 v_Color; 
                        void main() {
                           gl_Position = a_Position;
                           //gl_PointSize = 15.0;
                           gl_PointSize = a_PointSize;
+                          v_Color  = a_Color;
                         }`;
 
 shadersSources[FSH] = `precision mediump float;
               //uniform vec4 u_FragColor;
+                varying  vec4 v_Color; 
               void main() {
-                 gl_FragColor = vec4(1.0,0.3,0.6,1.0);//gl_FragColor = u_FragColor;
+               gl_FragColor = v_Color;
+                // gl_FragColor = vec4(1.0,0.3,0.6,1.0);//gl_FragColor = u_FragColor;
+               
                }`;
 
-let multipoints = new Ebika.Projects.WebGL1MultiPoints   ({canvasId:'canvasid',
+let multipoints = new Ebika.Projects.WebGL1MultiPoints_colors   ({canvasId:'canvasid',
     shadersSources: shadersSources,
     clearColor: [0.,0.,0.,1.0],
     attributs : {

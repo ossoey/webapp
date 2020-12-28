@@ -2590,7 +2590,7 @@ Ebika.Borders                   = class EbikaBorders   extends  Ebika.PolePortio
 
 };
 
-
+Ebika.Projects                =    { };
 
 
 class DateUtils {

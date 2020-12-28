@@ -10,6 +10,13 @@
             allProjects : [
 
                 {
+                    id    : "multipoints_colors",
+                    description : 'WEBGL BUFFER, ENSEMBLE DE POINTS ET COULEURS',
+                    image: '/image/multipoints_colors'
+
+                }   ,
+
+                {
                     id    : "multipoints",
                     description : 'WEBGL BUFFER, ENSEMBLE DE POINTS',
                     image: '/image/multipoints'
