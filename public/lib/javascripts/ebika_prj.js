@@ -108,63 +108,8 @@ Ebika.Projects.WebGL1Tests   = class EbikaProjectsWebGL1Tests   extends Ebika   
 Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    extends Ebika   {
     constructor(paramsIn) {
         super();
-        this.shdProg     = new Ebika.ShaderProgram({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources});
-
-        this.shdProgIns  = [new Ebika.ShaderProgram({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources}),
-            new Ebika.ShaderProgram({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources})]
-
-        this.shdProg.attributs
-
-        let poles  = [
-            -0.91 ,      -0.91,   0,
-            -0.63 , -0.8,   0,
-            -0.5 ,      -0.5,   0,
-            0.2,     -0.3,  0 ,
-            0.91,       -0.91,  0 ,
-            0.91,       -0.6,  0 ,
-            0.3,     0.1,  0 ,
-            0.91 ,      0.91,   0,
-            -0.91 ,      0.91,   0,
-            -0.6 ,    0.3,   0,
-        ];
-        let bordersobj = new  Ebika.Borders();
-        let borders    = bordersobj.getBorders({
-            poles:  poles,
-            scalingFactorRanges : [[0.3, 0.07] ] ,
-            scalingFactorConvRanges  :  [[0,1] ]
-        });
-
-        poles = bordersobj.polesMerge({polesA: poles, polesB: borders});
-
-
-        this.polePortionsPosition = new Ebika.PolePortions ({
-
-            poles  : poles,
-
-            dimension:3 ,
-
-        });
-
-        this.polePortionsColor= new Ebika.PolePortions ({
-            poles:[0.9,0.8,0.3,1.0,
-                0.3,0.5,0.7,1.0],
-            dimension:4,
-        });
-        this.polePortionsPointSize  = new Ebika.PolePortions ({
-            poles:[3.8,3.81],
-            dimension:1,
-        });
-
-
-
-        let segs =  new   Ebika.Segmentations();
-        let ratios  =  segs.segmentate().normalized
-
+        this.shdProg     = new Ebika.ShaderProgramNBuffer ({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources});
         this.clearColor = paramsIn.clearColor;
-
-
-
-
     };
 
     draw() {

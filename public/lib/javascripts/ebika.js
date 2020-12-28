@@ -439,15 +439,18 @@ Ebika.ShaderProgram                       = class EbikaShaderProgram extends Ebi
 Ebika.ShaderProgramNBuffer                       = class EbikaShaderProgram extends Ebika {
     constructor(paramsIn) {
         super();
-        this.VERTEX_SHADER            = 'VERTEX_SHADER';
-        this.FRAGMENT_SHADER          = 'FRAGMENT_SHADER';
-        this.POINTS                   = 'POINTS';
-        this.LINES                    = 'LINES';
-        this.LINE_STRIP               = 'LINE_STRIP';
-        this.LINE_LOOP                = 'LINE_LOOP';
-        this.TRIANGLES                = 'TRIANGLES';
-        this.TRIANGLE_STRIP           = 'TRIANGLE_STRIP';
-        this.TRIANGLE_FAN             = 'TRIANGLE_FAN';
+        this.GGGG  = 0x0300
+        this.VERTEX_SHADER                   = 0x8B31;
+        this.FRAGMENT_SHADER                 = 0x8B30;
+
+        this.POINTS                         = 0x0000;
+        this.LINES                          = 0x0001;
+        this.LINE_LOOP                      = 0x0002;
+        this.LINE_STRIP                     = 0x0003;
+        this.TRIANGLES                      = 0x0004;
+        this.TRIANGLE_STRIP                 = 0x0005;
+        this.TRIANGLE_FAN                   = 0x0006;
+
         this.attributs                = {};
         this.uniforms                 = {};
         const contextType = 'webgl';

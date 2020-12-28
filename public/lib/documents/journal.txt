@@ -1,0 +1,29 @@
+JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
+
+------------------------------------------------------------------
+
+
+2020-12-21, 4:00 PM, Poursuivre le plan du 2020-12-20:
+
+I     Réalisations.
+I-1   Textes, lecture de spécifications des 5 fonctions webgl d'assignation de données au buffeur, createBuffer(), bindBuffer(), bufferData(), vertexAttribPointer(), enableVertexAttribArray()   ,2020-12-21, 4:00 - 6:00, PM.
+
+-----
+
+2020-12-20, 3:00 AM, STRATÉGIE D'EXPÉRIMENTATION :
+
+I   Explorer l'assignation d'attributs dans les shaders
+I-1 Les coordonnées.
+I-2 Les tailles de particules.
+I-3 Les couleurs.
+
+II  Ajouter une zone interactive de transfert de données du  template vers les instances des classes publiques du laboratoire.
+
+III  Élaboration d'une spécificité de module de bordures avec une marge calculée à partir d'une proportion appliquée sur le plus petit segment d'interpoles.
+III-1  Implémenter la classe.
+III-2  Proposer une méthode de visualisation  des bordures en appliquant les expériences I et II.
+
+IV     Réalisations.
+IV-1   Plan et texte, 2020-12-20, 3:00 - 3:45, AM.
+IV-2   Explorer l'assignation d'attributs dans les shaders, Lectures, 2020-12-20, 3:45-4:15, AM.
+IV-3   Explorer l'assignation d'attributs dans les shaders, Lectures|Constances WEBGL| createBuffer , 2020-12-20, 4:25-5:45, AM.
