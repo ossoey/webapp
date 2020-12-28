@@ -23,6 +23,19 @@ class Ebika {
         this.Y_AXIS_ORIENTATION_MIDDLE     = "MIDDLE";
         this.Y_AXIS_ORIENTATION_BOTTOM     = "BOTTOM";
 
+
+        this.VERTEX_SHADER                  = 0x8B31;
+
+        this.FRAGMENT_SHADER                = 0x8B30;
+
+        this.POINTS                         = 0x0000;
+        this.LINES                          = 0x0001;
+        this.LINE_LOOP                      = 0x0002;
+        this.LINE_STRIP                     = 0x0003;
+        this.TRIANGLES                      = 0x0004;
+        this.TRIANGLE_STRIP                 = 0x0005;
+        this.TRIANGLE_FAN                   = 0x0006;
+
         this.config =  {
             "name": "Ebika",
             "author_info": {  "name"   : "Jean-Jacques Ebanga",
@@ -439,17 +452,8 @@ Ebika.ShaderProgram                       = class EbikaShaderProgram extends Ebi
 Ebika.ShaderProgramNBuffer                       = class EbikaShaderProgram extends Ebika {
     constructor(paramsIn) {
         super();
-        this.GGGG  = 0x0300
-        this.VERTEX_SHADER                   = 0x8B31;
-        this.FRAGMENT_SHADER                 = 0x8B30;
 
-        this.POINTS                         = 0x0000;
-        this.LINES                          = 0x0001;
-        this.LINE_LOOP                      = 0x0002;
-        this.LINE_STRIP                     = 0x0003;
-        this.TRIANGLES                      = 0x0004;
-        this.TRIANGLE_STRIP                 = 0x0005;
-        this.TRIANGLE_FAN                   = 0x0006;
+
 
         this.attributs                = {};
         this.uniforms                 = {};
@@ -464,22 +468,22 @@ Ebika.ShaderProgramNBuffer                       = class EbikaShaderProgram exte
         this.fragmentShader;
         this.program          = this.gl.createProgram();
 
-        function   getShader(objOlder, shadersSources,shaderSourceKey){
+        function   getShader(objHolder, shadersSources,shaderSourceKey){
             let shader;
-            if (shaderSourceKey == objOlder.VERTEX_SHADER) {
-                shader = objOlder.gl.createShader(objOlder.gl.VERTEX_SHADER);
+            if (shaderSourceKey == objHolder.VERTEX_SHADER) {
+                shader = objHolder.gl.createShader(objHolder.gl.VERTEX_SHADER);
 
             }
-            else if (shaderSourceKey ==  objOlder.FRAGMENT_SHADER)   {
+            else if (shaderSourceKey ==  objHolder.FRAGMENT_SHADER)   {
 
-                shader = objOlder.gl.createShader(objOlder.gl.FRAGMENT_SHADER);
+                shader = objHolder.gl.createShader(objHolder.gl.FRAGMENT_SHADER);
 
             };
 
-            objOlder.gl.shaderSource(shader,shadersSources[shaderSourceKey]);
-            objOlder.gl.compileShader(shader);
-            if (!objOlder.gl.getShaderParameter(shader,objOlder.gl.COMPILE_STATUS)) {
-                console.error(objOlder.gl.getShaderInfoLog(shader));
+            objHolder.gl.shaderSource(shader,shadersSources[shaderSourceKey.toString()]);
+            objHolder.gl.compileShader(shader);
+            if (!objHolder.gl.getShaderParameter(shader,objHolder.gl.COMPILE_STATUS)) {
+                console.error(objHolder.gl.getShaderInfoLog(shader));
                 return null;
             };
             return shader;
@@ -487,8 +491,8 @@ Ebika.ShaderProgramNBuffer                       = class EbikaShaderProgram exte
 
         this.ini = function () {
 
-            this.vertexShader     =  getShader(this, this.shadersSources, this.VERTEX_SHADER);
-            this.fragmentShader   =  getShader(this, this.shadersSources, this.FRAGMENT_SHADER);
+            this.vertexShader     =  getShader(this, this.shadersSources, this.VERTEX_SHADER );
+            this.fragmentShader   =  getShader(this, this.shadersSources, this.FRAGMENT_SHADER );
 
             this.gl.attachShader(this.program,this.vertexShader);
             this.gl.attachShader(this.program,this.fragmentShader);

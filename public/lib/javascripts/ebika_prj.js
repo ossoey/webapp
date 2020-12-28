@@ -109,7 +109,7 @@ Ebika.Projects.WebGL1MultiPoints   = class EbikaProjectsWebGL1MultiPoints    ext
     constructor(paramsIn) {
         super();
         this.shdProg     = new Ebika.ShaderProgramNBuffer ({canvasId:paramsIn.canvasId, shadersSources: paramsIn.shadersSources});
-        this.clearColor = paramsIn.clearColor;
+        this.clearColor   = paramsIn.clearColor;
     };
 
     draw() {

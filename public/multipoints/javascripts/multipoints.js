@@ -1,19 +1,25 @@
-let multipoints = new Ebika.Projects.WebGL1MultiPoints   ({canvasId:'canvasid', shadersSources: {
-        'VERTEX_SHADER':
-            `attribute vec4 a_Position;
-             attribute float a_PointSize;
-              void main() {
+
+const VSH =  new Ebika().VERTEX_SHADER.toString();
+
+const FSH =  new Ebika().FRAGMENT_SHADER.toString();
+
+let shadersSources = {};
+ shadersSources[VSH] = `attribute vec4 a_Position;
+                      attribute float a_PointSize;
+                       void main() {
                           gl_Position = a_Position;
                           //gl_PointSize = 15.0;
                           gl_PointSize = a_PointSize;
-                        }` ,
-        'FRAGMENT_SHADER' :
-            `precision mediump float;
+                        }`;
+
+shadersSources[FSH] = `precision mediump float;
               //uniform vec4 u_FragColor;
               void main() {
                  gl_FragColor = vec4(1.0,0.3,0.6,1.0);//gl_FragColor = u_FragColor;
-               }`
-    },
+               }`;
+
+let multipoints = new Ebika.Projects.WebGL1MultiPoints   ({canvasId:'canvasid',
+    shadersSources: shadersSources,
     clearColor: [0.,0.,0.,1.0],
     attributs : {
         position : {name:'a_Position',
