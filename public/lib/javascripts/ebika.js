@@ -1259,6 +1259,20 @@ Ebika.Matrices                  = class EbikaMatrices  extends Ebika.Vectors  {
           };
           return  insideObj.multiplication(this);
     };
+
+    bundleMultiplication (paramsIn) {
+        let initialIndex = 0;
+        let currentIndex = 1;
+        let matA  =  paramsIn.matrices[initialIndex ];
+
+        while (currentIndex < paramsIn.matrices.length) {
+            let matB  =  paramsIn.matrices[currentIndex ];
+            matA =  this.matMultiplication({dimension:paramsIn.dimension, matA:matA , matB: matB });
+            currentIndex++;
+        };
+        return  matA;
+     };
+
     matIdentity (paramsIn) {
 
         let result = [1];
@@ -1499,6 +1513,7 @@ Ebika.Matrices                  = class EbikaMatrices  extends Ebika.Vectors  {
                 vector: [1,0.3,4],
                 triangle:[[-1,0],[1,0],[0,1]],
                 location: [0,0.5],
+                matrices: [[1,2,0,3],[-5,6,0,3],[1,0,0,1], [-1,2,1.1,3]],
                 dimension:2,
                 index: 13,
                 row: 2,
@@ -1531,35 +1546,40 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
     };
 
     setTranslation(paramsIn) {
-        return [ 1,0,0,0,
+        this.matrix = [ 1,0,0,0,
                  0,1,0,0,
                  0,0,1,0,
             paramsIn.location[0],paramsIn.location[1],paramsIn.location[2],1,
         ];
+
+        return this.matrix;
     };
 
     setScale(paramsIn) {
-        return [ paramsIn.scale[0],0,0,0,
+        this.matrix = [ paramsIn.scale[0],0,0,0,
             0,paramsIn.scale[1],0,0,
             0,0,paramsIn.scale[2],0,
             0,0,0,1,
         ];
+        return this.matrix;
     };
     setXrotation(paramsIn) {
-        return [
+        this.matrix = [
             0,0,1,0,
             Math.cos(paramsIn.angle),Math.sin(paramsIn.angle),0,0,
              -Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
             0,0,0,1,
         ];
+        return this.matrix;
     };
 
     setYrotation(paramsIn) {
-        return [ Math.cos(paramsIn.angle),-Math.sin(paramsIn.angle),0,0,
+        this.matrix = [ Math.cos(paramsIn.angle),-Math.sin(paramsIn.angle),0,0,
                0,0,1,0,
             Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
             0,0,0,1,
         ];
+        return this.matrix;
     };
 
     setZrotation(paramsIn) {
@@ -1568,7 +1588,18 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
             0,0,1,0,
             0,0,0,1,
         ];
+        return this.matrix;
     };
+
+    setBundle(paramsIn) {
+        this.matrix =  this.bundleMultiplication({matrices: paramsIn.matrices, dimension: this.DIMENSION4 });
+        return this.matrix;
+    };
+
+    translate(paramsIn) {
+        return this.matMultiplication({dimension:this.DIMENSION4, matA:this.matrix,matB:paramsIn.pole })
+    };
+
 
 
     process() {
@@ -1584,7 +1615,9 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
        I-2.4  setScale
        I-2.5  setXrotation
        I-2.5  setYrotation
-       I-2.5  setZrotation
+       I-2.6  setZrotation
+       I-2.7 setBundle
+       I-2.8  translate
        
         
        II- PROCÉDÉS: PRÉ-REQUIS, OPÉRATIONS, STRUCTURES ET PROCESSUS.
@@ -1604,16 +1637,39 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
         }
         else {
             this.tests({
-                showTests:true,
+                showTests:false,
                 object:  this  ,
                 matrix: [ 0,1,2,3,
                         4,5,6,7,
                         8,9,10,11,
                         12,13,14,15
                 ] ,
+                matrices: [
+                    [ 0,1,2,3,
+                        4,5,6,7,
+                        8,9,10,11,
+                        12,13,14,15
+                    ] ,
+                    [ 1,0,0,0,
+                       0,1,0,0,
+                       0,0,1,0,
+                       0,0,0,1
+                    ] ,
+                    [ 2,0,0,0,
+                        0,-1,0,0,
+                        0,3,1,0,
+                        0,2,0,1
+                    ] ,
+                    [ 2,0,5,0,
+                        5,-1,0,0,
+                        0,3,1,0,
+                        0,2,4,1
+                    ] ,
+                ] ,
                 location: [1.3,4,7],
                 scale:[0.3,0.5,2],
-                angle: Math.PI/4
+                angle: Math.PI/4,
+                pole: [1,1,1,1]
             });
         };
     };

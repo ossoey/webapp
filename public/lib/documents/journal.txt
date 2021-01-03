@@ -3,11 +3,19 @@ JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
 ------------------------------------------------------------------
 
 
+2021-01-03, 3:00 PM, Poursuivre le plan du 2020-12-20:
+
+I     Réalisations.
+
+I-1   Implémentation dans Ebika des modules Matrices et Matrix4, avec leurs méthodes(translate, bundleMultiplication, setBundle)  ,2021-01-03, 3:30 - 5:30 , PM.
+
+-----
+
 2021-01-03, 2:00 AM, Poursuivre le plan du 2020-12-20:
 
 I     Réalisations.
 
-I-2   Implémentation dans Ebika de Matrix4, Identity,setMatrix,setTranslation ,setScale,setXrotation,setTrotation,setZrotation ,2021-01-03, 3:15 - 5:00  , AM.
+I-2   Implémentation dans Ebika du module Matrix4 avec ses méthodes , Identity,setMatrix,setTranslation ,setScale,setXrotation,setTrotation,setZrotation ,2021-01-03, 3:15 - 5:00  , AM.
 I-1   Lecture, Camera Lookat transformation, https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/lookat-function ,2021-01-03, 2:00 - 3:15, AM.
 
 -----

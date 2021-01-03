@@ -100,7 +100,7 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
            let radian = Math.PI * angle / 180.0;
            let cosB = Math.cos(radian), sinB = Math.sin(radian);
 
-            var rot_x_Matrix = new Float32Array([
+            let rot_x_Matrix = new Float32Array([
                 cosB, sinB, 0.0, 0.0,
                 -sinB, cosB, 0.0, 0.0,
                 0.0,  0.0, 1.0, 0.0,
@@ -108,7 +108,7 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             ]);
 
 
-            var u_rot_x_Matrix = gl.getUniformLocation(program, 'u_rot_x_Matrix');
+            let u_rot_x_Matrix = gl.getUniformLocation(program, 'u_rot_x_Matrix');
             if (!u_rot_x_Matrix) {
                 console.log('Failed to get the storage location of u_rot_x_Matrix');
                 return;
@@ -200,6 +200,41 @@ function main() {
     multipoints.shdProg.canvasFullScreen();
     multipoints.draw();
 
-   let mat4 = new Ebika.Matrix4();
-   mat4.doTests();
+   let mat = new Ebika.Matrix4();
+   mat.doTests({
+        showTests:true,
+            object:  mat  ,
+            matrix: [ 0,1,2,3,
+            4,5,6,7,
+            8,9,10,11,
+            12,13,14,15
+        ] ,
+        matrices: [
+           [ 0,1,2,3,
+               4,5,6,7,
+               8,9,10,11,
+               12,13,14,15
+           ] ,
+           [ 1,0,0,0,
+               0,1,0,0,
+               0,0,1,0,
+               0,0,0,1
+           ] ,
+           [ 2,0,0,0,
+               0,-1,0,0,
+               0,3,1,0,
+               0,2,0,1
+           ] ,
+           [ 2,0,5,0,
+               5,-1,0,0,
+               0,3,1,0,
+               0,2,4,1
+           ] ,
+       ] ,
+            location: [1.3,4,7],
+            scale:[0.3,0.5,2],
+            angle: Math.PI/4,
+            pole: [1,1,1,1],
+
+    });
 }
