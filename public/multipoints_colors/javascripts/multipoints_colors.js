@@ -13,7 +13,7 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
     };
 
     draw() {
-       let   angle = 90;
+       let   angle = 20;
 
         function initVertexBuffers(gl,program) {
             let  vertices = new Float32Array([  0.0, 0.5, -0.5, -0.5, 0.5, -0.5 ]);
@@ -63,13 +63,13 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
         function initBufferBlock(gl,program) {
 
             let  dataBlock = new Float32Array(
-                [   0.0, 0.5,  1.0, 0.0, 0.0,   25.0, 0.0,
-                             -0.5, -0.5, 0.0, 1.0, 0.0 ,    20.0, 0.0,
-                              0.5, -0.5 , 0.0, 0.0, 1.0 ,   15.0, 0.0,
+                [   0.0, 0.5,  1.0, 0.0, 1.0,   25.0,
+                             -0.5, -0.5, 0.0, 0.0, 1.0 ,    20.0,
+                              0.5, -0.5 , 0.0, 0.0, 1.0 ,   15.0,
 
-                    0.0, 0.45,  10.8, 0.0, 0.0,   20.0, 1.0,
-                    -0.45, -0.45, 0.0, 10.8, 0.0 ,    13.0, 1.0,
-                    0.45, -0.45 , 0.0, 0.0, 10.8 ,   9.0, 1.0
+                    0.0, 0.45,  10.8, 0.0, 0.0,   20.0,
+                    -0.45, -0.45, 0.0, 10.8, 0.0 ,    13.0,
+                    0.45, -0.45 , 0.0, 0.0, 10.8 ,   9.0
                 ]);
             let  count = 6;
             let  SIZE_PER_ELT  = dataBlock.BYTES_PER_ELEMENT
@@ -79,21 +79,17 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             gl.bufferData(gl.ARRAY_BUFFER, dataBlock, gl.STATIC_DRAW);
 
             let a_Position = gl.getAttribLocation(program, 'a_Position');
-            gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, SIZE_PER_ELT*7, 0);
+            gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, SIZE_PER_ELT*6, 0);
             gl.enableVertexAttribArray(a_Position);
 
 
             let a_Color = gl.getAttribLocation(program, 'a_Color');
-            gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, SIZE_PER_ELT*7, SIZE_PER_ELT*2);
+            gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, SIZE_PER_ELT*6, SIZE_PER_ELT*2);
             gl.enableVertexAttribArray(a_Color);
 
 
             let a_PointSize = gl.getAttribLocation(program, 'a_PointSize');
-            gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, SIZE_PER_ELT*7, SIZE_PER_ELT*5);
-            gl.enableVertexAttribArray(a_PointSize);
-
-            let a_triangle_index = gl.getAttribLocation(program, 'a_triangle_index');
-            gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, SIZE_PER_ELT*7, SIZE_PER_ELT*6);
+            gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, SIZE_PER_ELT*6, SIZE_PER_ELT*5);
             gl.enableVertexAttribArray(a_PointSize);
 
             return  count
@@ -112,7 +108,7 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             ]);
 
 
-            var u_rot_x_Matrix= gl.getUniformLocation(program, 'u_rot_x_Matrix');
+            var u_rot_x_Matrix = gl.getUniformLocation(program, 'u_rot_x_Matrix');
             if (!u_rot_x_Matrix) {
                 console.log('Failed to get the storage location of u_rot_x_Matrix');
                 return;
@@ -141,6 +137,7 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             let n = initBufferBlock(gl,program)
             if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
             initRotation(gl,program);
+
             return n;
         } ;
 
@@ -179,22 +176,18 @@ let shadersSources = {};
  shadersSources[VSH] = `attribute vec4 a_Position;
                        uniform mat4 u_rot_x_Matrix;
                        attribute float a_PointSize;
-                       attribute float a_triangle_index;
                        attribute vec4 a_Color;
                        varying  vec4 v_Color; 
                        void main() {
-                          gl_Position = u_rot_x_Matrix*a_Position;
-                          //gl_PointSize = 15.0;
+                          gl_Position = u_rot_x_Matrix*a_Position;              
                           gl_PointSize = a_PointSize;
                           v_Color  = a_Color;
                         }`;
 
 shadersSources[FSH] = `precision mediump float;
-              //uniform vec4 u_FragColor;
                 varying  vec4 v_Color; 
-              void main() {
-               gl_FragColor = v_Color;
-                // gl_FragColor = vec4(1.0,0.3,0.6,1.0);//gl_FragColor = u_FragColor;
+                void main() {
+                gl_FragColor = v_Color;
                }`;
 
 let multipoints = new Ebika.Projects.WebGL1MultiPoints_colors   ({canvasId:'canvasid',
@@ -206,4 +199,7 @@ function main() {
 
     multipoints.shdProg.canvasFullScreen();
     multipoints.draw();
+
+   let mat4 = new Ebika.Matrix4();
+   mat4.doTests();
 }

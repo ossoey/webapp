@@ -23,18 +23,18 @@ class Ebika {
         this.Y_AXIS_ORIENTATION_MIDDLE     = "MIDDLE";
         this.Y_AXIS_ORIENTATION_BOTTOM     = "BOTTOM";
 
+        this.DIMENSION4                    = 4;
+        this.VERTEX_SHADER                 = 0x8B31;
 
-        this.VERTEX_SHADER                  = 0x8B31;
+        this.FRAGMENT_SHADER               = 0x8B30;
 
-        this.FRAGMENT_SHADER                = 0x8B30;
-
-        this.POINTS                         = 0x0000;
-        this.LINES                          = 0x0001;
-        this.LINE_LOOP                      = 0x0002;
-        this.LINE_STRIP                     = 0x0003;
-        this.TRIANGLES                      = 0x0004;
-        this.TRIANGLE_STRIP                 = 0x0005;
-        this.TRIANGLE_FAN                   = 0x0006;
+        this.POINTS                        = 0x0000;
+        this.LINES                         = 0x0001;
+        this.LINE_LOOP                     = 0x0002;
+        this.LINE_STRIP                    = 0x0003;
+        this.TRIANGLES                     = 0x0004;
+        this.TRIANGLE_STRIP                = 0x0005;
+        this.TRIANGLE_FAN                  = 0x0006;
 
         this.config =  {
             "name": "Ebika",
@@ -207,7 +207,7 @@ class Ebika {
     }
 };
 
-Ebika.GraphicContext                      =   class EbikaGraphicContext  extends Ebika  {
+Ebika.GraphicContext                      = class EbikaGraphicContext  extends Ebika  {
     constructor(paramsIn) {
         super();
         let canvasId     = paramsIn.canvasId;
@@ -449,7 +449,7 @@ Ebika.ShaderProgram                       = class EbikaShaderProgram extends Ebi
     };
 };
 
-Ebika.ShaderProgramNBuffer                       = class EbikaShaderProgram extends Ebika {
+Ebika.ShaderProgramNBuffer                = class EbikaShaderProgram extends Ebika {
     constructor(paramsIn) {
         super();
 
@@ -1510,6 +1510,115 @@ Ebika.Matrices                  = class EbikaMatrices  extends Ebika.Vectors  {
     };
 };
 
+Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
+    constructor() {
+        super();
+        let dimension = 4;
+        this.setIdentity();
+    };
+    setIdentity() {
+        this.matrix = this.matIdentity ({dimension:    this.DIMENSION4 });
+        return  this.matrix.slice();
+    };
+
+    setMatrix(paramsIn) {
+        if (paramsIn.matrix.length !==16) {
+            return
+        } else {
+            this.matrix = paramsIn.matrix.slice();
+        };
+        return  this.matrix.slice();
+    };
+
+    setTranslation(paramsIn) {
+        return [ 1,0,0,0,
+                 0,1,0,0,
+                 0,0,1,0,
+            paramsIn.location[0],paramsIn.location[1],paramsIn.location[2],1,
+        ];
+    };
+
+    setScale(paramsIn) {
+        return [ paramsIn.scale[0],0,0,0,
+            0,paramsIn.scale[1],0,0,
+            0,0,paramsIn.scale[2],0,
+            0,0,0,1,
+        ];
+    };
+    setXrotation(paramsIn) {
+        return [
+            0,0,1,0,
+            Math.cos(paramsIn.angle),Math.sin(paramsIn.angle),0,0,
+             -Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
+            0,0,0,1,
+        ];
+    };
+
+    setYrotation(paramsIn) {
+        return [ Math.cos(paramsIn.angle),-Math.sin(paramsIn.angle),0,0,
+               0,0,1,0,
+            Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
+            0,0,0,1,
+        ];
+    };
+
+    setZrotation(paramsIn) {
+        return [ Math.cos(paramsIn.angle),Math.sin(paramsIn.angle),0,0,
+            -Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
+            0,0,1,0,
+            0,0,0,1,
+        ];
+    };
+
+
+    process() {
+
+     let description =` 
+       I  - FINALITÉS
+       I-1 Sommaire d'intention
+           les fonctions usuelles des matrices dans le traitement graphique 3D
+       I-2 Détail d'intention: Implémenter les méthode suivantes
+       I-2.1  setIdentity
+       I-2.2  setMatrix
+       I-2.3  setTranslation 
+       I-2.4  setScale
+       I-2.5  setXrotation
+       I-2.5  setYrotation
+       I-2.5  setZrotation
+       
+        
+       II- PROCÉDÉS: PRÉ-REQUIS, OPÉRATIONS, STRUCTURES ET PROCESSUS.
+       II-1 Importer les méthodes générales de Ebika.Matrices
+
+       III- RÉSULTATS
+       III-1 Publier les fonctions usuelles des matrices dans le traitement graphique 3D
+             `
+        return  description;
+
+    };
+
+    doTests(paramsIn) {
+        if ( paramsIn) {
+            paramsIn.xceptionFunctionsName = ['constructor','tests','doTests'];
+            this.tests(paramsIn);
+        }
+        else {
+            this.tests({
+                showTests:true,
+                object:  this  ,
+                matrix: [ 0,1,2,3,
+                        4,5,6,7,
+                        8,9,10,11,
+                        12,13,14,15
+                ] ,
+                location: [1.3,4,7],
+                scale:[0.3,0.5,2],
+                angle: Math.PI/4
+            });
+        };
+    };
+
+};
 Ebika.CurveInfo                 = class EbikaCurveInfo   extends  Ebika.Matrices  {
     constructor(paramsIn) {
         super( );
