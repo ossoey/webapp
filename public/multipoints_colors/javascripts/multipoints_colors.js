@@ -235,6 +235,8 @@ function main() {
             scale:[0.3,0.5,2],
             angle: Math.PI/4,
             pole: [1,1,1,1],
-
+            angleX:0,
+            angleY:Math.PI/4,
+            angleZ:0,
     });
 }

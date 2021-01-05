@@ -1565,18 +1565,19 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
     };
     setXrotation(paramsIn) {
         this.matrix = [
-            0,0,1,0,
-            Math.cos(paramsIn.angle),Math.sin(paramsIn.angle),0,0,
-             -Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
+            1,0,0,0,
+            0, Math.cos(paramsIn.angle),Math.sin(paramsIn.angle),0,
+            0, -Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,
             0,0,0,1,
         ];
         return this.matrix;
     };
 
     setYrotation(paramsIn) {
-        this.matrix = [ Math.cos(paramsIn.angle),-Math.sin(paramsIn.angle),0,0,
-               0,0,1,0,
-            Math.sin(paramsIn.angle),Math.cos(paramsIn.angle),0,0,
+        this.matrix = [
+            Math.cos(paramsIn.angle),0,-Math.sin(paramsIn.angle),0,
+            0,1,0,0,
+            Math.sin(paramsIn.angle),0,Math.cos(paramsIn.angle),0,
             0,0,0,1,
         ];
         return this.matrix;
@@ -1591,9 +1592,42 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
         return this.matrix;
     };
 
+    setXYZrotation(paramsIn) {
+        return [ Math.cos(paramsIn.angleZ)*Math.cos(paramsIn.angleY),
+               Math.sin(paramsIn.angleZ)*Math.cos(paramsIn.angleY),
+               -Math.sin(paramsIn.angleY),
+                0,
+
+                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.sin(paramsIn.angleX)- Math.sin(paramsIn.angleZ)*Math.cos(paramsIn.angleX),
+                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.sin(paramsIn.angleX)+Math.sin(paramsIn.angleZ)*Math.cos(paramsIn.angleX),
+                Math.cos(paramsIn.angleY)*Math.sin(paramsIn.angleX),
+                0,
+
+                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.cos(paramsIn.angleX)+ Math.sin(paramsIn.angleZ)*Math.sin(paramsIn.angleX),
+                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.cos(paramsIn.angleX)- Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleX),
+                Math.cos(paramsIn.angleY)*Math.cos(paramsIn.angleX),
+                0,
+
+                0,0,0,1,
+        ];
+        return this.matrix;
+    };
+
     setBundle(paramsIn) {
         this.matrix =  this.bundleMultiplication({matrices: paramsIn.matrices, dimension: this.DIMENSION4 });
         return this.matrix;
+    };
+
+    setBundle3D(paramsIn) {
+        return this.bundleMultiplication({matrices:
+                [[0,1,0, -1,0,0, 0,0,1], [0,0,-1,  0, 1, 0,  1,0,0], [1,0,0, 0,0,1,  0,-1,0]],
+            dimension: 3});
+    };
+
+    setEulerRoation(paramsIn) {
+       return  this.bundleMultiplication({matrices: [this.setXrotation({angle:paramsIn.angleX}),
+                                                               this.setYrotation({angle:paramsIn.angleY}),
+                                                               this.setZrotation({angle:paramsIn.angleZ}) ], dimension: this.DIMENSION4 });
     };
 
     translate(paramsIn) {
@@ -1669,7 +1703,10 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
                 location: [1.3,4,7],
                 scale:[0.3,0.5,2],
                 angle: Math.PI/4,
-                pole: [1,1,1,1]
+                pole: [1,1,1,1],
+                angleX:Math.PI/4,
+                angleY:0,
+                angleZ:0,
             });
         };
     };

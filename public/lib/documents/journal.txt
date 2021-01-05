@@ -3,6 +3,15 @@ JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
 ------------------------------------------------------------------
 
 
+
+2021-01-04, 8:00 PM, Poursuivre le plan du 2020-12-20:
+
+I     Réalisations.
+
+I-1   Implémentation, exploration et tests des méthodes de rotation de Matrix4, 2021-01-04, 8:00 - 9:30 , PM.
+
+-----
+
 2021-01-03, 3:00 PM, Poursuivre le plan du 2020-12-20:
 
 I     Réalisations.
