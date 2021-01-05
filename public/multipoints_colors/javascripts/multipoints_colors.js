@@ -238,5 +238,7 @@ function main() {
             angleX:0,
             angleY:Math.PI/4,
             angleZ:0,
+            eye : [0.2,0.2,0.4],
+            at :  [0,0, -1]
     });
 }

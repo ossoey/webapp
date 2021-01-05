@@ -1599,17 +1599,33 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
                 0,
 
                 Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.sin(paramsIn.angleX)- Math.sin(paramsIn.angleZ)*Math.cos(paramsIn.angleX),
-                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.sin(paramsIn.angleX)+Math.sin(paramsIn.angleZ)*Math.cos(paramsIn.angleX),
+                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.sin(paramsIn.angleX)+Math.cos(paramsIn.angleZ)*Math.cos(paramsIn.angleX),
                 Math.cos(paramsIn.angleY)*Math.sin(paramsIn.angleX),
                 0,
 
                 Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.cos(paramsIn.angleX)+ Math.sin(paramsIn.angleZ)*Math.sin(paramsIn.angleX),
-                Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.cos(paramsIn.angleX)- Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleX),
+                Math.sin(paramsIn.angleZ)*Math.sin(paramsIn.angleY)*Math.cos(paramsIn.angleX)- Math.cos(paramsIn.angleZ)*Math.sin(paramsIn.angleX),
                 Math.cos(paramsIn.angleY)*Math.cos(paramsIn.angleX),
                 0,
 
                 0,0,0,1,
         ];
+        return this.matrix;
+    };
+
+    setLookAt(paramsIn) {
+        let worldUp =  this.vectorNormalized({ v: [0,1,0]});
+        let forward = this.vectorNormalized({ v: this.vector({p1:paramsIn.at,p2:paramsIn.eye})});
+        let right   = this.crossProduct({v1:worldUp,v2: forward});
+        let up      = this.crossProduct({v1:forward,v2: right});
+
+        this.matrix = [
+            right[0],right[1],right[2],0,
+            up[0], up[1], up[2], 0,
+            forward[0],forward[1],forward[2],0,
+            0,0,0,1
+        ];
+
         return this.matrix;
     };
 
@@ -1707,6 +1723,8 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
                 angleX:Math.PI/4,
                 angleY:0,
                 angleZ:0,
+                eye : [0.2,0.2,0.4],
+                at :  [0,0, -1]
             });
         };
     };
