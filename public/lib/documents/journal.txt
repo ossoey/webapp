@@ -2,6 +2,16 @@ JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
 
 ------------------------------------------------------------------
 
+
+2021-01-07, 9:00 AM, Poursuivre le plan du 2020-12-20:
+
+I     Réalisations.
+
+I-1   Implémentation, exploration et tests de la  méthodes setLookAt de Matrix4, passer la matrice view dans le vertex Shader, 2021-01-07, 9:00 - 9:30 , AM.
+
+-----
+
+
 2021-01-05, 8:30 AM, Poursuivre le plan du 2020-12-20:
 
 I     Réalisations.

@@ -1666,8 +1666,10 @@ Ebika.Matrix4                   = class EbikaMatrix4  extends Ebika.Matrices {
        I-2.5  setXrotation
        I-2.5  setYrotation
        I-2.6  setZrotation
-       I-2.7 setBundle
-       I-2.8  translate
+       I-2.7  setXYZrotation
+       I-2.8  setLookAt
+       I-2.9   setBundle
+       I-2.10  translate
        
         
        II- PROCÉDÉS: PRÉ-REQUIS, OPÉRATIONS, STRUCTURES ET PROCESSUS.

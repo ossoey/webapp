@@ -116,6 +116,23 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             gl.uniformMatrix4fv(u_rot_x_Matrix, false, rot_x_Matrix);
         };
 
+        function initViewMatrix(gl,program) {
+
+
+            let mat  = new Ebika.Matrix4();
+
+            let viewMatrix = new Float32Array( mat.setLookAt({eye:[-2.0,-0.9,0.9]  ,at:[0,0,0.5]  }));
+
+            console.log(viewMatrix)
+
+            let u_viewMatrix = gl.getUniformLocation(program, 'u_viewMatrix');
+            if (!u_viewMatrix) {
+                console.log('Failed to get the storage location of u_viewMatrix');
+                return;
+            }
+            gl.uniformMatrix4fv(u_viewMatrix, false, viewMatrix);
+        };
+
         function drawWithMultipleBuffers(gl,program) {
             let n = initVertexBuffers(gl,program);
             if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
@@ -129,6 +146,8 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
 
             initRotation(gl,program);
 
+            initViewMatrix(gl,program);
+
             return n;
 
         } ;
@@ -137,6 +156,8 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
             let n = initBufferBlock(gl,program)
             if (n < 0) {  console.log('Failed to set the positions of the vertices'); return;  }
             initRotation(gl,program);
+
+            initViewMatrix(gl,program);
 
             return n;
         } ;
@@ -175,11 +196,12 @@ Ebika.Projects.WebGL1MultiPoints_colors   = class EbikaProjectsWebGL1MultiPoints
 let shadersSources = {};
  shadersSources[VSH] = `attribute vec4 a_Position;
                        uniform mat4 u_rot_x_Matrix;
+                       uniform mat4  u_viewMatrix;
                        attribute float a_PointSize;
                        attribute vec4 a_Color;
                        varying  vec4 v_Color; 
                        void main() {
-                          gl_Position = u_rot_x_Matrix*a_Position;              
+                          gl_Position =  u_viewMatrix*u_rot_x_Matrix*a_Position;              
                           gl_PointSize = a_PointSize;
                           v_Color  = a_Color;
                         }`;
