@@ -10,6 +10,13 @@
             allProjects : [
 
                 {
+                    id    : "quizzexp",
+                    description : 'EXPÉRIENCE DE QUIZZ',
+                    image: '/image/quizzexp'
+
+                }   ,
+
+                {
                     id    : "multipoints_colors",
                     description : 'WEBGL BUFFER, ENSEMBLE DE POINTS ET COULEURS',
                     image: '/image/multipoints_colors'

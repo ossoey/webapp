@@ -3,6 +3,22 @@ JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
 ------------------------------------------------------------------
 
 
+2021-01-11, 3:00 PM, Poursuivre le plan du 2020-12-20:
+
+I     Réalisations.
+
+I-1   Implémentation du quizz, entités du quizz: reference, question, reponses et propositions joueur, partie, sequences , 2021-01-11, 3:00 -11:00   , PM.
+
+-----
+
+2021-01-10, 4:00 AM, Poursuivre le plan du 2020-12-20:
+
+I     Réalisations.
+
+I-1   Conception d'un quizz, entités du quizz: reference, question, reponses et propositions joueur, partie, sequences , 2021-01-10, 4:00 - 5:30 , AM.
+
+-----
+
 2021-01-07, 9:00 AM, Poursuivre le plan du 2020-12-20:
 
 I     Réalisations.
