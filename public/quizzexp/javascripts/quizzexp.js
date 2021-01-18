@@ -5,6 +5,7 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
         this.quizzes = {
             "wordcapitals" : {
 
+
                 "references" :  [
                     {"pays": "Afghanistan", "capitale": "Kaboul",  "continent" : "Asie", "preposition":"de l'"} ,
                     {"pays": "Afrique du Sud", "capitale": "Pretoria",  "continent" : "Afrique", "preposition":"de l'"} ,
@@ -14,8 +15,12 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
                     {"pays": "Andorre", "capitale": "Andorre-la-vielle",  "continent" : "Europe", "preposition":"de l'"} ,
                     {"pays": "Angola", "capitale": "Luanda",  "continent" : "Afrique", "preposition":"de l'"} ,
                     {"pays": "Antigua-et-Barbuda", "capitale": "Saint John’s",  "continent" : "Amérique", "preposition":"de l'"} ,
-
-
+                    {"pays": "Arabie saoudite", "capitale": "Ryad",  "continent" : "Asie", "preposition":"de l'"} ,
+                    {"pays": "Argentine", "capitale": "Buenos Aires",  "continent" : "Amérique", "preposition":"de l'"} ,
+                    {"pays": "Arménie", "capitale": "Erevan",  "continent" : "Asie", "preposition":"de l'"} ,
+                    {"pays": "Australie", "capitale": "Canberra",  "continent" : "Oceanie", "preposition":"de l'"} ,
+                    {"pays": "Austriche", "capitale": "Vienne",  "continent" : "Europe", "preposition":"de l'"} ,
+                    {"pays": "Azerbaïdjan", "capitale": "Bakou",  "continent" : "Europe", "preposition":"de l'"} ,
                    ],
                 "questions" : [
                     {"question" : "Quelle est la capitale $0$ ?","qindex": "pays", "rindex":"capitale","propindex":"preposition"  },
@@ -41,15 +46,15 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
         }
     };
 
-
-
-
     essay(paramsIn) {
-      return   [this.quizzes.wordcapitals.buildGivenQuestion(0,0),
-                this.quizzes.wordcapitals.buildGivenQuestion(1,0),
-                this.quizzes.wordcapitals.buildGivenQuestion(2,0),
-                 this.quizzes.wordcapitals.buildGivenQuestion(3,0),
-      ];
+
+        let infos = [];
+
+        for (let paysIndex = 0 ;paysIndex< this.quizzes.wordcapitals.references.length ;paysIndex ++ ) {
+            infos.push(this.quizzes.wordcapitals.buildGivenQuestion(paysIndex,0));
+        };
+        return infos;
+
     };
 
     doTests(paramsIn) {
