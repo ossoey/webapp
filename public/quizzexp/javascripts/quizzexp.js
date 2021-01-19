@@ -1,6 +1,7 @@
 
 Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
     constructor(paramsIn) {
+        let turn  =  0;
         super();
         this.quizzes = {
             "wordcapitals" : {
@@ -41,8 +42,15 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
 
            },
 
+        };
 
-
+        this.players = {
+            elements :  [],
+            nextTurn : function () {
+                turn+=1;
+                turn = turn % this.elements.length
+                return   turn
+            }
         }
     };
 
@@ -55,6 +63,15 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
         };
         return infos;
 
+    };
+
+    nextTurn () {
+       return  "C'est le tour de :" + this.players.elements[this.players.nextTurn()];
+    };
+
+    iniPlayers(paramsIn) {
+      this.players.elements = paramsIn.players;
+      //alert(this.players)
     };
 
     doTests(paramsIn) {
@@ -74,5 +91,5 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuizzexp     extends Ebika   {
 
 const  quizz  = new Ebika.Projects.Quizzexp();
 function main() {
-    quizz.doTests();
+   // quizz.doTests();
 }
