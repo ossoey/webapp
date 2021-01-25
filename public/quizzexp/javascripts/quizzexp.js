@@ -146,7 +146,18 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuißzzexp     extends Ebika   {
 
 
 const  quizz  = new Ebika.Projects.Quizzexp();
+const  rand  = new Ebika.Random();
 function main() {
     quizz.essay();
+     console.log(   rand.retrieveElements({
+
+        arr: [0,1,2,3,4,5,6,7,8,9],
+        elementsCount: 11
+
+    }),"  ,  ", rand.mixElements({
+
+         arr: [0,1,2,3,4,5,6,7,8,9]
+     })
+     );
    // quizz.doTests();
 }

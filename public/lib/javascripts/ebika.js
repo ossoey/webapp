@@ -536,6 +536,8 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
             conv:[0.,1.],
             convRanges:[[0.,1.], [0.5,0.8]],
             partsCount: 10,
+            arr: [0,1,2,3,4,5,6,7,8,9],
+            elementsCount: 3
         };
     }
 
@@ -605,7 +607,7 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
             result.push(this.floatPart(paramsIn));
         };
         return result;
-    }
+    };
 
     intPart (paramsIn) {  //ranges, convRanges
         let  result,
@@ -623,7 +625,7 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
         });
 
         return result;
-    }
+    };
 
     intParts  (paramsIn) {  //ranges, convRanges, partsCount
         let  result = [];
@@ -631,7 +633,36 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
             result.push(this.intPart(paramsIn));
         }
         return result;
-    }
+    };
+
+    retrieveElements  (paramsIn) {  //arr, elementsCount
+      let nestedObj = {};
+        nestedObj.arr     = paramsIn.arr.slice();
+        nestedObj.arrOut  = [];
+        nestedObj.pickRandomElement = function (parentObj){
+            let eltIndex = parentObj.intValue({range:[0,this.arr.length-1]});
+            this.arrOut.push(this.arr[eltIndex]);
+            this.arr.splice(eltIndex, 1);
+        };
+        nestedObj.pickRandomElementsCount = function (parentObj){
+            for(let eltIndex =0;eltIndex<paramsIn.elementsCount;eltIndex++) {
+                this.pickRandomElement (parentObj);
+            };
+        };
+
+      if  (( paramsIn.elementsCount>=0) && ( paramsIn.elementsCount<=paramsIn.arr.length) ){
+          nestedObj.pickRandomElementsCount(this);
+      } else {
+          nestedObj.arrOut  = paramsIn.arr.slice();
+      };
+
+      return  nestedObj.arrOut;
+    };
+
+    mixElements  (paramsIn){
+        return   this.retrieveElements ({arr:paramsIn.arr,elementsCount:paramsIn.arr.length });
+    };
+
 
     desc(paramsIn) {
 
@@ -640,7 +671,9 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
             ranges:'Ensemble de valeurs minimum et maximun, Array[Arrays], exple: [[2,5],[-1,12],[60,60]]',
             conv:'Convergence aléatoire minimun et maximum , Array,[convMin,convMax]',
             convRanges:'Ensemble de Convergences aléatoire minimun et maximum, Array[Arrays], exple: [[0.,1.], [0.5,0.8]]',
-            partsCount:'Nombre d éléments aléatoires à générer'
+            partsCount:'Nombre d éléments aléatoires à générer',
+            arr: 'Array ou matrice donnée',
+            elementsCount: 'Nombre d eléments aléatoires à extraire d une matrice(arr) donnée',
         };
 
         return    paramsIn.result
@@ -662,6 +695,8 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
                 conv:[0.,1.],
                 convRanges:[[0.,1.], [0.5,0.8]],
                 partsCount: 10,
+                arr: [0,1,2,3,4,5,6,7,8,9],
+                elementsCount: 3
 
             });
         };
@@ -2813,6 +2848,7 @@ Ebika.Borders                   = class EbikaBorders   extends  Ebika.PolePortio
 };
 
 Ebika.Projects                =    { };
+
 
 
 class DateUtils {
