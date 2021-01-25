@@ -157,7 +157,16 @@ function main() {
     }),"  ,  ", rand.mixElements({
 
          arr: [0,1,2,3,4,5,6,7,8,9]
-     })
+     }),"  ,  ",
+
+         rand. retrieveElementsWithException({
+
+             arr: [0,1,2,3,4],
+             elementsCount: 3,
+             exceptionIndex: 2
+
+             })
+
      );
    // quizz.doTests();
 }

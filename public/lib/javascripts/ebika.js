@@ -537,7 +537,8 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
             convRanges:[[0.,1.], [0.5,0.8]],
             partsCount: 10,
             arr: [0,1,2,3,4,5,6,7,8,9],
-            elementsCount: 3
+            elementsCount: 3,
+            exceptionIndex: 5
         };
     }
 
@@ -658,8 +659,12 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
 
       return  nestedObj.arrOut;
     };
-
-    mixElements  (paramsIn){
+    retrieveElementsWithException  (paramsIn) {
+       let arrSeggregated =  paramsIn.arr.slice();
+        arrSeggregated.splice( paramsIn.exceptionIndex,1);
+        return this.retrieveElements({arr:arrSeggregated,elementsCount:paramsIn.elementsCount});
+    }
+     mixElements  (paramsIn){
         return   this.retrieveElements ({arr:paramsIn.arr,elementsCount:paramsIn.arr.length });
     };
 
@@ -674,6 +679,7 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
             partsCount:'Nombre d éléments aléatoires à générer',
             arr: 'Array ou matrice donnée',
             elementsCount: 'Nombre d eléments aléatoires à extraire d une matrice(arr) donnée',
+            exceptionIndex: 'index exceptionnel de l element à ne pas renvoyer parmis les éléments retournés,'
         };
 
         return    paramsIn.result
@@ -696,7 +702,8 @@ Ebika.Random                    = class EbikaRandom  extends Ebika {
                 convRanges:[[0.,1.], [0.5,0.8]],
                 partsCount: 10,
                 arr: [0,1,2,3,4,5,6,7,8,9],
-                elementsCount: 3
+                elementsCount: 3,
+                exceptionIndex: 5,
 
             });
         };

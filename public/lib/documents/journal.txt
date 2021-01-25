@@ -2,12 +2,11 @@ JOURNAL DE CRÉATION, LAVAL,QC, CA, 2020-12-20, JEAN-JACQUES EBANGA
 
 ------------------------------------------------------------------
 
-
-
 2021-01-25, 7:30 AM, Poursuivre le plan du 2020-12-20:
 
 I     Réalisations.
 
+I-2   Implémentation de la selection aléatoire de  n élément différents d'un array with exception index. Tests.  2021-01-25, 12:00 -12:45   ,  PM.
 I-2   Implémentation de la selection aléatoire de  n élément différents d'un array. Tests.  2021-01-25, 8:45 -11:45   ,  AM.
 I-2   Implémentation des index de données(Continent, pays, capitale). Pour chaque valeur donnée, renvoyé sa position dans son ensemble de données. Tests.  2021-01-25, 7:45 -8:45   ,  AM.
 I-1   Ajouts de 4 pays préfixé par "Ba', 2021-01-25, 7:30 -7:45    , PM.
