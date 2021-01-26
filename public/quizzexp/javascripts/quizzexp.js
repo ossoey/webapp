@@ -4,10 +4,10 @@ const   continents = ["Afrique", "Amérique", "Asie", "Europe", "Océanie"];
 Ebika.Projects.Quizzexp   = class EbikaProjectsQuißzzexp     extends Ebika   {
     constructor(paramsIn) {
         let turn  =  0;
+        let questionIndex = 0;
         super();
         this.quizzes = {
             "wordcapitals" : {
-
 
                 "references" :  [
                     {"pays": "Afghanistan", "capitale": "Kaboul",  "continent" :  continents [2], "preposition":"de l'",  } ,
@@ -21,13 +21,13 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuißzzexp     extends Ebika   {
                     {"pays": "Arabie saoudite", "capitale": "Ryad",  "continent" : continents [2], "preposition":"de l'"} ,
                     {"pays": "Argentine", "capitale": "Buenos Aires",  "continent" :  continents [1], "preposition":"de l'"} ,
                     {"pays": "Arménie", "capitale": "Erevan",  "continent" :  continents [2], "preposition":"de l'"} ,
-                    {"pays": "Australie", "capitale": "Canberra",  "continent" : continents [5], "preposition":"de l'"} ,
+                    {"pays": "Australie", "capitale": "Canberra",  "continent" : continents [4], "preposition":"de l'"} ,
                     {"pays": "Austriche", "capitale": "Vienne",  "continent" : continents [3], "preposition":"de l'"} ,
                     {"pays": "Azerbaïdjan", "capitale": "Bakou",  "continent" :  continents [3], "preposition":"de l'"} ,
-                    {"pays": "Bahamas", "capitale": "Nasseau",  "continent" :  continents [1], "preposition":"de l'"} ,
-                    {"pays": "Bahreîn", "capitale": "Manama",  "continent" :  continents [2], "preposition":"de l'"} ,
-                    {"pays": "Bangladesh", "capitale": "Dacca",  "continent" :  continents [2], "preposition":"de l'"} ,
-                    {"pays": "Barbade", "capitale": "BridgeTown",  "continent" :  continents [1], "preposition":"de l'"} ,
+                    {"pays": "Bahamas", "capitale": "Nasseau",  "continent" :  continents [1], "preposition":"du "} ,
+                    {"pays": "Bahreîn", "capitale": "Manama",  "continent" :  continents [2], "preposition":"du "} ,
+                    {"pays": "Bangladesh", "capitale": "Dacca",  "continent" :  continents [2], "preposition":"du "} ,
+                    {"pays": "Barbade", "capitale": "BridgeTown",  "continent" :  continents [1], "preposition":"de la "} ,
                    ],
                 "questions" : [
                     {"question" : "Quelle est la capitale $0$ ?","qindex": "pays", "rindex":"capitale","propindex":"preposition"  },
@@ -75,23 +75,61 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuißzzexp     extends Ebika   {
                 }   ,
 
                 tests : function () {
-
                     let test  =[ [["Amérique" ,this.indexOfContinent("Amérique")], ["Europe" ,this.indexOfContinent("Europe")],  ["Europew" ,this.indexOfContinent("Europew")]],
                                   [["Bahamas" ,this.indexOfCountry("Bahamas")], ["Andorre" ,this.indexOfCountry("Andorre")], ["Andorre2" ,this.indexOfCountry("Andorre2")]],
                                    [["Vienne" ,this.indexOfCapital("Vienne")], ["Alger" ,this.indexOfCapital("Alger")], ["Andorre2" ,this.indexOfCapital("Andorre2")]],
                         ]
                     console.log(test);
                    return  test;
-
                 }  ,
 
-                buildGivenQuestion : function (targetReferenceIndex,targetQuestionIndex) {
-                    let str          =  this.questions[targetQuestionIndex]["question"]
-                    let strQuestion_  = str.replace("$0", this.references[targetReferenceIndex][ this.questions[targetQuestionIndex]["propindex"] ]);
-                    let strQuestion   = strQuestion_.replace("$", this.references[targetReferenceIndex][ this.questions[targetQuestionIndex]["qindex"] ]);
-                    let reponse      = this.references[targetReferenceIndex][this.questions[targetQuestionIndex]["rindex"] ]
+                getQuizzOptions : function (targetReferenceIndex,targetQuestionIndex) {
+                    let options, nestedObj = {};
+                    let rand               = new Ebika.Random();
+                    nestedObj.getValues = function(parentObj,rawValues){
+                        let values = [];
+                        for (let valueIndex = 0;valueIndex <rawValues.length;valueIndex ++) {
+                            values.push(rawValues[valueIndex ][parentObj.questions[targetQuestionIndex]["rindex"]]);
+                        };
+                        return   values;
+                    };
 
-                    return {strQuestion,reponse};
+                    if (targetQuestionIndex <= 1) {
+                        let opts    =   rand.retrieveElementsWithException({
+                            arr: this.references,
+                            elementsCount: 3,
+                            exceptionIndex: targetReferenceIndex
+                        });
+                        options = nestedObj.getValues(this, opts );
+                    }else if (targetQuestionIndex > 1) {
+                        options   =   rand.retrieveElementsWithException({
+                            arr: continents,
+                            elementsCount: 3,
+                            exceptionIndex: continents.indexOf(this.references[targetReferenceIndex]["continent"])
+                        });
+                    };
+                    return options;
+                }   ,
+
+                buildGivenQuestion : function (targetReferenceIndex,targetQuestionIndex) {
+                    let rand           = new Ebika.Random();
+                    let str            = this.questions[targetQuestionIndex]["question"]
+                    let strQuestion_   = str.replace("$0", this.references[targetReferenceIndex][ this.questions[targetQuestionIndex]["propindex"] ]);
+                    let strQuestion    = strQuestion_.replace("$", this.references[targetReferenceIndex][ this.questions[targetQuestionIndex]["qindex"] ]);
+                    let reponse        = this.references[targetReferenceIndex][this.questions[targetQuestionIndex]["rindex"] ]
+                    let options        = this.getQuizzOptions(targetReferenceIndex,targetQuestionIndex);
+                    let eltIndex       = rand.intValue({range:[0,options.length-1]});
+                    let optionsDiplay  = options.slice();
+                    optionsDiplay.splice(eltIndex, 0, reponse);
+
+
+                    return {strQuestion, reponse, options, optionsDiplay };
+                }    ,
+
+                nextQuestion : function () {
+                    questionIndex +=1;
+                    questionIndex = questionIndex % this.references.length
+                    return    this.buildGivenQuestion(questionIndex,1);
                 }
 
            },
@@ -105,24 +143,33 @@ Ebika.Projects.Quizzexp   = class EbikaProjectsQuißzzexp     extends Ebika   {
                 turn = turn % this.elements.length
                 return   turn
             }
-        }
+        };
+
+
     };
 
     essay(paramsIn) {
 
         let infos = [];
 
-        // for (let paysIndex = 0 ;paysIndex< this.quizzes.wordcapitals.references.length ;paysIndex ++ ) {
-        //     infos.push(this.quizzes.wordcapitals.buildGivenQuestion(paysIndex,0));
-        // };
+        for (let paysIndex = 0 ;paysIndex< this.quizzes.wordcapitals.references.length ;paysIndex ++ ) {
+            infos.push(this.quizzes.wordcapitals.buildGivenQuestion(paysIndex,1));
+        };
 
-        this.quizzes.wordcapitals.tests();
-        //return infos;
+        console.log(infos)
+
+       // this.quizzes.wordcapitals.tests();
+        return infos;
 
     };
 
     nextTurn () {
        return  "C'est le tour de :" + this.players.elements[this.players.nextTurn()];
+    };
+
+    nextQuestion() {
+
+        return  this.quizzes.wordcapitals.nextQuestion()
     };
 
     iniPlayers(paramsIn) {
@@ -149,24 +196,24 @@ const  quizz  = new Ebika.Projects.Quizzexp();
 const  rand  = new Ebika.Random();
 function main() {
     quizz.essay();
-     console.log(   rand.retrieveElements({
-
-        arr: [0,1,2,3,4,5,6,7,8,9],
-        elementsCount: 11
-
-    }),"  ,  ", rand.mixElements({
-
-         arr: [0,1,2,3,4,5,6,7,8,9]
-     }),"  ,  ",
-
-         rand. retrieveElementsWithException({
-
-             arr: [0,1,2,3,4],
-             elementsCount: 3,
-             exceptionIndex: 2
-
-             })
-
-     );
+    //  console.log(   rand.retrieveElements({
+    //
+    //     arr: [0,1,2,3,4,5,6,7,8,9],
+    //     elementsCount: 11
+    //
+    // }),"  ,  ", rand.mixElements({
+    //
+    //      arr: [0,1,2,3,4,5,6,7,8,9]
+    //  }),"  ,  ",
+    //
+    //      rand. retrieveElementsWithException({
+    //
+    //          arr: [0,1,2,3,4],
+    //          elementsCount: 3,
+    //          exceptionIndex: 2
+    //
+    //          })
+    //
+    //  );
    // quizz.doTests();
 }

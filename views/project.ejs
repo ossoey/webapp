@@ -60,23 +60,19 @@ and is wrapped around the whole page content, except for the footer in this exam
 
     <% if(  name =='quizzexp'){ %>
 
-    <div id="divForm">
-        <h6> <span class="w3-tag" > Entrer les noms de joueurs  </span>   <span class="w3-tag gotolink ">  </span>    </h6>
-        <label for="fjouer1">jouer1:</label> <input type="text" id="fjouer1" name="fjouer1"><br><br>
-        <label for="fjouer2">jouer2:</label> <input type="text" id="fjouer2" name="fjouer2"><br><br>
-        <label for="fjouer3">jouer2:</label> <input type="text" id="fjouer3" name="fjouer3"><br><br>
-        <input type="submit" value="valider" id="btnvalider">
-    </div >
+<!--    <div id="divForm">-->
+<!--        <h6> <span class="w3-tag" > Entrer les noms de joueurs  </span>   <span class="w3-tag gotolink ">  </span>    </h6>-->
+<!--        <label for="fjouer1">jouer1:</label> <input type="text" id="fjouer1" name="fjouer1"><br><br>-->
+<!--        <label for="fjouer2">jouer2:</label> <input type="text" id="fjouer2" name="fjouer2"><br><br>-->
+<!--        <label for="fjouer3">jouer2:</label> <input type="text" id="fjouer3" name="fjouer3"><br><br>-->
+<!--        <input type="submit" value="valider" id="btnvalider">-->
+<!--    </div >-->
 
 
     <div id="divTournDisplay">
             <h6> <span class="w3-tag" id ="tourde"> C'est $1 de jouer  </span>   <span class="w3-tag gotolink ">  </span>    </h6>
             <label for="question" id ="question"  class="w3-tag" >Question</label>
-             <select id="answersoptions">
-             <option value="op1">op1</option>
-             <option value="op2">op2</option>
-             <option value="op2">op2</option>
-             </select>
+<!--  -->
             <h6> <span class="w3-tag" > La bonne réponse est : $1  </span>   <span class="w3-tag gotolink ">  </span>    </h6>
             <input type="submit" value="NextTurn" id="nextTurn">
    </div >
@@ -177,8 +173,13 @@ and is wrapped around the whole page content, except for the footer in this exam
 
             case "nextTurn" :
                 let nextTurn = document.getElementById("nextTurn") ;
-                let tourde  = document.getElementById("tourde") ;
-                tourde.innerHTML =   quizz.nextTurn();
+                let tourde    = document.getElementById("tourde") ;
+                let question   = document.getElementById("question") ;
+
+                //strQuestion, reponse, options, optionsDiplay
+                tourde.innerHTML       =   quizz.nextTurn();
+                let questionstr        =   quizz.nextQuestion();
+                question.innerHTML     =   questionstr.strQuestion + "       " + questionstr.optionsDiplay
                // nextTurn.value =  quizz.nextTurn();
                 break;
 
